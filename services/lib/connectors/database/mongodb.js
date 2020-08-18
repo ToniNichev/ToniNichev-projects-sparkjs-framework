@@ -1,32 +1,12 @@
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
+import { MongoClient } from 'mongodb';
+import assert from 'assert';
 
 // Connection URL
 const url = 'mongodb://localhost:27017';
- 
 // Database Name
 const dbName = 'myproject';
- 
 
-function connect(callback) {
-  MongoClient.connect(
-    url, 
-    { useNewUrlParser: true },
-    function(err, client) {
-      assert.equal(null, err);
-      if(err == null) {
-        const db = client.db(dbName);
-        callback(db);
-      }
-      else {
-        console.log("Can't connect to mongodb!");
-      }
-
-      client.close();
-  });
-}
-
-module.exports = {
+export default {
 
   add: (docObject, collectionName, callback) => {
     connect(function(db) {        
@@ -39,15 +19,25 @@ module.exports = {
     });
 	},
 	
-	find: (searchObject, collectionName, callback) => {
-    connect(function(db) {        
-			db.collection(collectionName).find(searchObject).toArray(function(err, result) {
-				if (err) throw err;
-				if(callback != null) {
-					callback(err, result);
-				}
-			});
-		});
+	find: async (searchObject, collectionName) => {
+    let client;
+    let result;
+
+    try  {
+      client = await MongoClient.connect(url);
+      console.log("Connected correctly to server");
+  
+      const db = client.db(dbName);
+
+      result = await db.collection(collectionName).find(searchObject).toArray();
+    }
+    catch (err) {
+      console.log(err.stack);
+    }    
+    // Close connection
+    if(client)
+      client.close();
+    return result;
   },
   
   dropDB: (DBName) => {

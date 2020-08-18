@@ -4,6 +4,7 @@ import queries from './queries';
 
 const app = express();
 
+/*
 app.get('/', (req, res) => {
   const dogs = queries.getDogsList();
   dogs.then(
@@ -12,6 +13,13 @@ app.get('/', (req, res) => {
       res.send(result);
     }
   )
+});
+*/
+
+app.get('/', async (req, res) => {
+  const result = await queries.getDogsListTest();
+  console.log(">$$$$$>>>", result);
+  res.send(result);
 });
 
 app.listen(3600,()=>

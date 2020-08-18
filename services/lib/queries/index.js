@@ -27,6 +27,10 @@ export default {
     },
     */ 
 
+   getDogsListTest: async () => {      
+    const result = await mongoDB.find({}, 'Dogs');
+    return result;
+   }, 
     
     getDogsList: () => {      
         return new Promise((resolve, reject) => {
