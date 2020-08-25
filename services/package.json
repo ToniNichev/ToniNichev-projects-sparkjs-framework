@@ -5,8 +5,9 @@
   "author": "Toni Nichev",
   "license": "MIT",
   "scripts": {
-    "build": "babel lib -d dist",
+    "build": "babel src -d dist",
     "start": "npm run build && nodemon dist/index.js",
+    "start-inspect": "npm run build && nodemon --inspect dist/index.js",
     "serve": "npm run build && node dist/index.js"
   },
   "devDependencies": {

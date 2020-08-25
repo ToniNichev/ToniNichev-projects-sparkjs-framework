@@ -8,26 +8,14 @@ const getDogsListTest = async () => {
 */ 
 
 export default {
-    /*
-    getDogByBreed: {
-      type: DogType,
-      args: {
-        breed: { type: graphql.GraphQLString }
-      },
-      resolve: function (_, {breed}) {      
-        return new Promise((resolve, reject) => {
-          mongoDB.find({breed: breed}, 'Dogs', function(err, result) {
-            if(err) 
-              reject(err);
-            else 
-              resolve(result[0]);                  
-          });
-        }); 
-      },
-    },
-    */ 
 
-   getDogsListTest: async () => {      
+
+    getDogByBreed: async (breed) => {
+      const result = await mongoDB.find({breed: breed}, 'Dogs');
+      return result;
+    },
+
+   getDogsList: async () => {      
     const result = await mongoDB.find({}, 'Dogs');
     return result;
    }, 
