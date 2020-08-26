@@ -4,19 +4,34 @@ import assert from 'assert';
 // Connection URL
 const url = 'mongodb://localhost:27017';
 // Database Name
-const dbName = 'myproject';
+const dbName = 'sparkjs';
+
+const connect = async () => {
+  let db = null;
+  try {
+    const client = await MongoClient.connect(url);
+    console.log("Connected correctly to server");
+    db = client.db(dbName);    
+  } 
+  catch (err) {
+    console.log(err.stack);
+  }     
+  return db;
+}
 
 export default {
 
-  add: (docObject, collectionName, callback) => {
-    connect(function(db) {        
-        db.collection(collectionName).insert(docObject, function(err, res) {
-					if (err) throw err;
-					if(callback != null) {
-						callback();
-					}
-        });
-    });
+  add: async (docObject, collectionName) => {
+    let result;
+
+    try  {
+      const db = await connect();
+      result = await db.collection(collectionName).insert(docObject);
+      return result;
+    }
+    catch (err) {
+      console.log(err.stack);
+    }  
 	},
 	
 	find: async (searchObject, collectionName) => {
@@ -40,10 +55,14 @@ export default {
     return result;
   },
   
-  dropDB: (DBName) => {
-    connect(function(db) {  
+  dropDB: async (DBName) => {
+    try  {
+      const db = await connect();
       db.dropDatabase();
-    });
+    }
+    catch (err) {
+      console.log(err.stack);
+    }  
   }
 }
 
