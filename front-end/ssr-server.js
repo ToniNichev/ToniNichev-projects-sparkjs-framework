@@ -12,6 +12,7 @@ import templateList from './src/templates/TemplateList';
 import cookieParser from 'cookie-parser';
 import cookiesManagement from './expressMiddlewares/cookiesManagement';
 import requestDataFromAPI from './expressMiddlewares/requestDataFromAPI';
+require('global-agent/bootstrap');
 
 const {APP_HOST, SERVER_PORT, ENVIRONMENT} = process.env;
 
