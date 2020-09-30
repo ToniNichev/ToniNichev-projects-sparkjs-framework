@@ -55,7 +55,7 @@ export default {
     return result;
   },
   
-  dropDB: async (DBName) => {
+  dropDB: async () => {
     try  {
       const db = await connect();
       db.dropDatabase();

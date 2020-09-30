@@ -27,16 +27,17 @@ export default {
 
    setup: async () => {
      mongoDB.dropDB();
-     const obj = module.exports = [
+     const obj = [
       {
-        id: 'home',
-        url: '/home',
+        url: '/about',
+        template: "Html",    
         layout: [ 
           {
             span: 12,
             components: [
               {
-                name: "Header"
+                name: "Header",
+                props: {}
               }
             ]
           },
@@ -44,13 +45,78 @@ export default {
             span: 12,
             components:[
               {
-                name: "Home"
+                name: "About",
+                props: {}
               }
             ] 
-          }                       
+          }         
+        ]    
+      },
+      {
+        url: '/home',
+        template: "Html",              
+        layout: [ 
+          {
+            span: 12,
+            components: [
+              {
+                name: "Header",
+                props: {}
+              }
+            ]
+          },
+          {
+            span: 12,
+            components:[
+              {
+                name: "Home",
+                props: {}
+              }
+            ] 
+          },        
         ]
-      }
-    ];
+      },
+      {
+        url: '/greetings',
+        template: "Html",    
+        layout: [ 
+          {
+            span: 12,        
+            components: [
+              {
+                name: "Header",
+                props: {}
+              }
+            ]
+          },
+          {
+            span: 12,
+            components:[
+              {
+                name: "Greetings",
+                props: { user: "Sam"}
+              }
+            ] 
+          },        
+        ]
+      },
+      {
+        url: '/other-template',
+        template: "OtherHtml",      
+        layout: [ 
+          {
+            span: 12,
+            components:[
+              {
+                name: "Greetings",
+                props: {}
+              }
+            ] 
+          },        
+        ]
+      }    
+     ]
+    
 
     mongoDB.add(obj, 'Pages', () => {
       console.log("DONE");
